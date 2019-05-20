@@ -12058,3 +12058,6 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+.error{
+  color: red;font-size: 1rem;
+}

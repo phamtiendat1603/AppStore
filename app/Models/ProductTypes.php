@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductType extends Model
+class ProductTypes extends Model
 {
     protected $table = 'producttype';
 
@@ -13,6 +13,7 @@ class ProductType extends Model
     ];
 
     public function Category(){
-    	return $this->belongsTo('App\Models\Category','idCategory','id');
+    	return $this->belongsTo('App\Models\Categories','idCategory','id');
     }
 }
+
