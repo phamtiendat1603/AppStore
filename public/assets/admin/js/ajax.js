@@ -137,5 +137,42 @@ $(document).ready(function(){
 			});
 		});
 	});
+	$('.cateProduct').change(function(){
+		let idCate = $(this).val();
+		$.ajax({
+			url : 'getproducttype',
+			data : {
+				idCate : idCate
+			},
+			type : 'get',
+			dataType : 'json',
+			success : function(data){
+				let html = '';
+				$.each(data,function($key,$value){
+					html += '<option value='+$value['id']+'>';
+						html += $value['name'];
+					html += '</option>';	
+				});
+				$('.proTypeProduct').html(html);
+			}
+		});
+	});
+
+	//Delete product
+	$('.deleteProduct').click(function(){
+		let id = $(this).data('id');
+		$('.delProduct').click(function(){
+			$.ajax({
+				url : 'admin/product/'+id,
+				type : 'delete',
+				dataType : 'json',
+				success : function(data){
+					toastr.success(data.result, 'Thông báo', {timeOut: 5000});
+					$('#delete').modal('hide');
+					location.reload();
+				}
+			});
+		});
+	});
 
 });
