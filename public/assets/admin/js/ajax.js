@@ -157,7 +157,111 @@ $(document).ready(function(){
 			}
 		});
 	});
-
+	//Edit product
+	$('.editProduct').click(function(){
+		$('.errorName').hide();
+		$('.errorQuantity').hide();
+		$('.errorPrice').hide();
+		$('.errorPromotional').hide();
+		$('.errorImage').hide();
+		$('.errorDescription').hide();
+		let id = $(this).data('id');
+		$.ajax({
+			url : 'admin/product/'+id+'/edit',
+			dataType : 'json',
+			type : 'get',
+			success : function(data){
+				$('.name').val(data.product.name);
+				$('.quantity').val(data.product.quantity);
+				$('.price').val(data.product.price);
+				$('.promotional').val(data.product.promotional);
+				$('.imageThum').attr('src','img/upload/product/'+data.product.image);
+				if(data.product.status == 1){
+					$('.ht').attr('selected','selected');
+				}else{
+					$('.kht').attr('selected','selected');
+				}
+				CKEDITOR.instances['demo'].setData(data.product.description);
+				let html1 = '';
+				$.each(data.category,function(key,value){
+					if(data.product.idCategory == value['id']){
+						html1 += '<option value="'+value['id']+'" selected>';
+							html1 += value['name'];
+						html1 += '</option>';
+					}else{
+						html1 += '<option value="'+value['id']+'">';
+							html1 += value['name'];
+						html1 += '</option>';
+					}
+				});
+				$('.cateProduct').html(html1);
+				let html2 = '';
+				$.each(data.producttype,function(key,value){
+					if(data.product.idProductType == value['id']){
+						html2 += '<option value="'+value['id']+'" selected>';
+							html2 += value['name'];
+						html2 += '</option>';		
+					}else{
+						html2 += '<option value="'+value['id']+'">';
+							html2 += value['name'];
+						html2 += '</option>';	
+					}
+				});
+				$('.proTypeProduct').html(html2);
+			}
+		});
+		$('#updateProduct').on('submit',function(event){
+			//chặn form submit
+			event.preventDefault();
+			$.ajax({
+				url : 'admin/updatePro/'+id,
+				data : new FormData(this),
+				contentType : false,
+				processData : false,
+				cache : false,
+				type : 'post',
+				success : function(data){
+					console.log(data);
+					if(data.error == 'true'){
+						if(data.message.image){
+							$('.errorImage').show();
+							$('.errorImage').text(data.message.image[0]);
+							$('.image').val('');
+						}
+						if(data.message.name){
+							$('.errorName').show();
+							$('.errorName').text(data.message.name[0]);
+							$('.name').val('');
+						}
+						if(data.message.quantity){
+							$('.errorQuantity').show();
+							$('.errorQuantity').text(data.message.quantity[0]);
+							$('.quantity').val('');
+						}
+						if(data.message.price){
+							$('.errorPrice').show();
+							$('.errorPrice').text(data.message.price[0]);
+							$('.price').val('');
+						}
+						if(data.message.promotional){
+							$('.errorPromotional').show();
+							$('.errorPromotional').text(data.message.promotional[0]);
+							$('.promotional').val('');
+						}
+						if(data.message.description){
+							$('.errorDescription').show();
+							$('.errorDescription').text(data.message.description[0]);
+							$('.description').val('');
+						}
+					}else{
+						toastr.success(data.result, 'Thông báo', {timeOut: 5000});
+						$('#edit').modal('hide');
+						location.reload();
+					}
+				}
+			});
+		});
+	});
 	//Delete product
 	$('.deleteProduct').click(function(){
 		let id = $(this).data('id');

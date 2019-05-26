@@ -86,31 +86,59 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
 				        <div class="col-lg-12">
-				            <form role="form">
-				                <fieldset class="form-group">
-				                    <label>Name</label>
-				                    <input class="form-control name" name="name" placeholder="Nhập tên loại sản phẩm">
-									<div class="alert alert-danger error"></div>
-				                </fieldset>
-				                <div class="form-group">
-				                    <label>Category</label>
-				                    <select class="form-control idCategory" name="idCategory"></select>
-				                </div>
-				                <div class="form-group">
-				                    <label>Status</label>
-				                    <select class="form-control" name="status">
-				                        <option value="1" class="ht">Hiển Thị</option>
-				                        <option value="0" class="kht">Không Hiển Thị</option>
-				                    </select>
-				                </div>
-				            </form>
+				            <form role="form" id="updateProduct" method="post" enctype="multipart/form-data">
+                                <fieldset class="form-group">
+                                    <label>Tên sản phẩm</label>
+                                    <input class="form-control name" name="name" placeholder="Nhập tên loại sản phẩm">
+                                    <div class="alert alert-danger errorName"></div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <label for="quantity">Số lượng</label>
+                                    <input type="number" name="quantity" min="1" value="1" class="form-control quantity">
+                                    <div class="alert alert-danger errorQuantity"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Đơn giá</label>
+                                    <input type="text" name="price" placeholder="Nhập đơn giá" class="form-control price">
+                                    <div class="alert alert-danger errorPrice"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Giá khuyến mại</label>
+                                    <input type="text" name="promotional" value="0" placeholder="Nhập giá khuyến mại nếu có" class="form-control promotional">
+                                    <div class="alert alert-danger errorPromotional"></div>
+                                </div>
+                                <img class="img img-thumbnail imageThum" width="100" height="100" lign="center">
+                                <div class="form-group">
+                                    <label for="price">Ảnh minh họa</label>
+                                    <input type="file" name="image" class="form-control image">
+                                    <div class="alert alert-danger errorImage"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mô tả sản phẩm</label>
+                                    <textarea name="description" id="demo" cols="5" rows="5" class="form-control description"></textarea>
+                                    <div class="alert alert-danger errorDescription"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Danh mục sản phẩm</label>
+                                    <select class="form-control cateProduct" name="idCategory"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Loại sản phẩm</label>
+                                    <select class="form-control proTypeProduct" name="idProductType"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control status" name="status">
+                                        <option value="1" class="ht">Hiển Thị</option>
+                                        <option value="0" class="kht">Không Hiển Thị</option>
+                                    </select>
+                                </div>
+                                <input type="submit" class="btn btn-success" value="Sửa">
+                                <button type="reset" class="btn btn-primary">Nhập Lại</button>
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            </form>
 				        </div>
 				    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success updateProduct">Save</button>
-                    <button type="reset" class="btn btn-primary">Làm Lại</button>
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
