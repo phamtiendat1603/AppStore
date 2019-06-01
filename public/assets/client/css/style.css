@@ -1572,7 +1572,6 @@ table.timetable_sub {
 }
 
 td.invert-image a img {
-    width: 30%;
     margin: 0 auto;
 }
 
@@ -1588,7 +1587,7 @@ td.invert-image a img {
     width: 28px;
     height: 28px;
     position: absolute;
-    right: 15px;
+    right: 37px;
     top: -13px;
     -webkit-transition: color 0.2s ease-in-out;
     -moz-transition: color 0.2s ease-in-out;

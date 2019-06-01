@@ -156,7 +156,7 @@
                 <div class="modal-body" style="margin-left: 183px;">
                     <button type="button" class="btn btn-success delProduct">Có</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Không</button>
-                <div>
+                </div>
             </div>
         </div>
     </div>

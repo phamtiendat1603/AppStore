@@ -199,6 +199,7 @@
 <script type="text/javascript" src="assets/client/js/custom.js"></script>
 
 <script type="text/javascript" src="assets/admin/js/toastr.min.js"></script>
+<script type="text/javascript" src="assets/client/js/ajax.js"></script>
 @if(session('thongbao'))
 	<script type="text/javascript">
 		messageSuccess('{{ session('thongbao') }}');

@@ -80,7 +80,14 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            if($request->qty == 0){
+                return response()->json(['error' => 'Số lượng tối thiểu là 1 sản phẩm'],200);
+            }else{
+                Cart::update($id,$request->qty);
+                return response()->json(['result' => 'Đã cập số lượng sản phẩm thành công']);
+            }
+        }
     }
 
     /**
@@ -91,7 +98,8 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cart::remove($id);
+        return response()->json(['result' => 'Đã xóa sản phẩm thành công']);
     }
 
     public function addCart($id,Request $request){
@@ -109,6 +117,10 @@ class CartController extends Controller
         $cart = ['id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $price, 'options' => ['img' => $product->image]];
         Cart::add($cart);
         return back()->with('thongbao','Đã mua hàng '.$product->name.' thành công');
+    }
+    public function checkout(){
+
+        return view('client.pages.checkout');
     }
     
 }

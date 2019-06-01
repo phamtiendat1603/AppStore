@@ -6,10 +6,9 @@
 	<!-- Meta tag Keywords -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
-	<meta name="keywords" content="Electro Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"
-	/>
+	<meta name="keywords" content="Electro Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
 	<!-- //Meta tag Keywords -->
-
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- Custom-Files -->
 	<link href="assets/client/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 	<!-- Bootstrap css -->
@@ -28,6 +27,7 @@
 	<link href="assets/client/css/opensan.css" rel="stylesheet">
 	<!-- //web fonts -->
 	<link rel="stylesheet" type="text/css" href="assets/admin/css/toastr.css">
+	<link rel="stylesheet" type="text/css" href="assets/client/css/easy-responsive-tabs.css">
 </head>
 
 <body>

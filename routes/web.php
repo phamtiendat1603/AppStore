@@ -32,3 +32,4 @@ Route::get('/','HomeController@index');
 
 Route::resource('cart','CartController');
 Route::get('addcart/{id}','CartController@addCart')->name('addCart');
+Route::get('checkout','CartController@checkout');

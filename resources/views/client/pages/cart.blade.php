@@ -26,7 +26,7 @@
 		<div class="container py-xl-4 py-lg-2">
 			<!-- tittle heading -->
 			<h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-				<span>G</span>iỏ hàng của {{ Auth::user()->name }}
+				<span>G</span>iỏ hàng của {{ Auth::user()->name ?? ' ' }}
 			</h3>
 			<!-- //tittle heading -->
 			<div class="checkout-right">
@@ -57,20 +57,16 @@
 									</td>
 									<td class="invert">
 										<div class="quantity">
-											<form class="form">
-												<div class="form-group">
-													<input type="hidden" name="row_id" class="row_id form-control" value="{{ $value->rowId }}">
-													<input type="number" name="qty" class="form-control qty" value="{{ $value->qty }}">
-												</div>
-												
-											</form>
+											<div class="form-group">
+												<input type="number" name="qty" class="form-control qty" value="{{ $value->qty }}" min='1' data-id="{{ $value->rowId }}">
+											</div>
 										</div>
 									</td>
 									<td class="invert">{{ $value->name }}</td>
-									<td class="invert">{{ $value->price }}</td>
+									<td class="invert">{{ number_format($value->price) }} VNĐ</td>
 									<td class="invert">
 										<div class="rem">
-											<div class="close1"> </div>
+											<div class="close1" data-id="{{ $value->rowId }}"></div>
 										</div>
 									</td>
 								</tr>
@@ -85,18 +81,18 @@
 			</div>
 			<div class="checkout-left">
 				<div class="address_form_agile mt-sm-5 mt-4">
-					<h4 class="mb-sm-4 mb-3">Add a new Details</h4>
+					<h4 class="mb-sm-4 mb-3">Tiến hàng mua hàng</h4>
 					<form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
 						<div class="creditly-wrapper wthree, w3_agileits_wrapper">
 							<div class="information-wrapper">
 								<div class="first-row">
 									<div class="controls form-group">
-										<input class="billing-address-name form-control" type="text" name="name" placeholder="Full Name" required="">
+										<input class="billing-address-name form-control" type="text" value="{{ $user->name ?? '' }}" name="name" placeholder="Họ và tên" required="">
 									</div>
 									<div class="w3_agileits_card_number_grids">
 										<div class="w3_agileits_card_number_grid_left form-group">
 											<div class="controls">
-												<input type="text" class="form-control" placeholder="Mobile Number" name="number" required="">
+												<input type="text" class="form-control" placeholder="Số điện thoại" value="{{ $user->customer->phone ?? '' }}" name="number" required="">
 											</div>
 										</div>
 										<div class="w3_agileits_card_number_grid_right form-group">
@@ -118,12 +114,12 @@
 										</select>
 									</div>
 								</div>
-								<button class="submit check_out btn">Delivery to this Address</button>
+								<button class="submit check_out btn">Giao hàng đến địa chỉ này</button>
 							</div>
 						</div>
 					</form>
 					<div class="checkout-right-basket">
-						<a href="payment.html">Make a Payment
+						<a href="payment.html">Chọn phương thức thanh toán
 							<span class="far fa-hand-point-right"></span>
 						</a>
 					</div>
@@ -131,4 +127,21 @@
 			</div>
 		</div>
 	</div>
+	{{-- Delete --}}
+	<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không ?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin-left: 183px;">
+                    <button type="button" class="btn btn-success delProduct">Có</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Không</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

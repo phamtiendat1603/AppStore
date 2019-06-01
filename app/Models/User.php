@@ -29,4 +29,7 @@ class User extends Authenticatable
     ];
 
     protected $table = 'users';
+    public function customer(){
+        return $this->hasMany('App\Models\Customer','idUser','id');
+    }
 }
