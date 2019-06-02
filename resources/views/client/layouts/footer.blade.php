@@ -211,4 +211,9 @@
 		messageError('{{ session('error') }}');
 	</script>
 @endif
+@if(isset($user) && count($user->customer) == 0)
+	<script type="text/javascript">
+		$('#address').modal('show');
+	</script>
+@endif
 <!-- //js-files -->

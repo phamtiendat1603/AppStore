@@ -46,7 +46,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->address);
     }
 
     /**
@@ -119,8 +119,9 @@ class CartController extends Controller
         return back()->with('thongbao','Đã mua hàng '.$product->name.' thành công');
     }
     public function checkout(){
-
-        return view('client.pages.checkout');
+        $user = User::findOrFail(Auth::user()->id);
+        $cart =str_replace(',','',Cart::total());
+        return view('client.pages.checkout',compact('user','cart'));
     }
     
 }

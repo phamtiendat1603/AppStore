@@ -81,43 +81,7 @@
 			</div>
 			<div class="checkout-left">
 				<div class="address_form_agile mt-sm-5 mt-4">
-					<h4 class="mb-sm-4 mb-3">Tiến hàng mua hàng</h4>
-					<form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
-						<div class="creditly-wrapper wthree, w3_agileits_wrapper">
-							<div class="information-wrapper">
-								<div class="first-row">
-									<div class="controls form-group">
-										<input class="billing-address-name form-control" type="text" value="{{ $user->name ?? '' }}" name="name" placeholder="Họ và tên" required="">
-									</div>
-									<div class="w3_agileits_card_number_grids">
-										<div class="w3_agileits_card_number_grid_left form-group">
-											<div class="controls">
-												<input type="text" class="form-control" placeholder="Số điện thoại" value="{{ $user->customer->phone ?? '' }}" name="number" required="">
-											</div>
-										</div>
-										<div class="w3_agileits_card_number_grid_right form-group">
-											<div class="controls">
-												<input type="text" class="form-control" placeholder="Landmark" name="landmark" required="">
-											</div>
-										</div>
-									</div>
-									<div class="controls form-group">
-										<input type="text" class="form-control" placeholder="Town/City" name="city" required="">
-									</div>
-									<div class="controls form-group">
-										<select class="option-w3ls">
-											<option>Select Address type</option>
-											<option>Office</option>
-											<option>Home</option>
-											<option>Commercial</option>
-
-										</select>
-									</div>
-								</div>
-								<button class="submit check_out btn">Giao hàng đến địa chỉ này</button>
-							</div>
-						</div>
-					</form>
+					<a href="{{ route('cart.ckeckout') }}" class="submit check_out btn">Giao hàng đến địa chỉ này</a>
 					<div class="checkout-right-basket">
 						<a href="payment.html">Chọn phương thức thanh toán
 							<span class="far fa-hand-point-right"></span>

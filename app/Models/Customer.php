@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    //
-	protected $table = 'customer';
+    protected $table = 'customer';
 
 	protected $fillable = [
-		'idUser', 'address','phone',
+		'idUser', 'email', 'address','phone', 'active',
 	];
 
 	public function User(){

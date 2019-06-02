@@ -112,7 +112,7 @@ class UserController extends Controller
     public function logout(){
         if(Auth::check()){
             Auth::logout();
-            return back(->)with('thongbao','Đăng xuất thành công');
+            return back()->with('thongbao','Đăng xuất thành công');
         }
     }
     public function updatePassClient(Request $request){

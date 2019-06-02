@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
+use App\Models\Customer;
 use Illuminate\Http\Request;
-
+use Auth;
 class CustomerController extends Controller
 {
     /**
@@ -35,7 +35,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['idUser'] = Auth::user()->id;
+        if($request->has('active')){
+            $customer = Customer::where('idUser',Auth::user()->id)->where('active',1)->first();
+            $customer->update(['active' => 0]);
+            $data['active'] = 1;
+        }else{
+            $data['active'] = 0;
+        }
+        Customer::create($data);
+        return back()->with('thongbao','Đã thêm địa chỉ thành công');
     }
 
     /**
