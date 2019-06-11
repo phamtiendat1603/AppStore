@@ -185,10 +185,6 @@
 <script src="assets/client/js/scroll.js"></script>
 <!-- //scroll seller -->
 
-<!-- smoothscroll -->
-<script src="assets/client/js/SmoothScroll.min.js"></script>
-<!-- //smoothscroll -->
-
 <!-- start-smooth-scrolling -->
 <script src="assets/client/js/move-top.js"></script>
 <script src="assets/client/js/easing.js"></script>
@@ -211,8 +207,8 @@
 		messageError('{{ session('error') }}');
 	</script>
 @endif
-@if(isset($user) && count($user->customer) == 0)
-	<script type="text/javascript">
+@if( isset($user) && count($user->customer) == 0 )
+	<script>
 		$('#address').modal('show');
 	</script>
 @endif

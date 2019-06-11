@@ -9,6 +9,8 @@ use App\Models\Categories;
 use App\Models\ProductTypes;
 use Cart;
 use Auth;
+use App\Models\Order;
+use App\Models\OrderDetail;
 class CartController extends Controller
 {
 
@@ -46,7 +48,23 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->address);
+        $data = $request->all();
+        $data['monney'] = str_replace(',', '', $request->monney);
+        $data['idUser'] = Auth::user()->id;
+        $data['code_order'] = 'order'.rand();
+        $data['status'] = 0;
+        $order = Order::create($data);
+        $idOrder = $order->id;
+        $orderdetail = [];
+        foreach( Cart::content() as $cart ){
+            $orderdetail['idOrder'] = $idOrder;
+            $orderdetail['idProduct'] = $cart->id;
+            $orderdetail['quantity'] = $cart->qty;
+            $orderdetail['price'] = $cart->price;
+            OrderDetail::create($orderdetail);
+        }
+        Cart::destroy();
+        return response()->json('Đã mua hàng thành công',200);
     }
 
     /**
@@ -119,9 +137,9 @@ class CartController extends Controller
         return back()->with('thongbao','Đã mua hàng '.$product->name.' thành công');
     }
     public function checkout(){
-        $user = User::findOrFail(Auth::user()->id);
-        $cart =str_replace(',','',Cart::total());
-        return view('client.pages.checkout',compact('user','cart'));
+	    $user = Auth::user();
+        $price = str_replace(',', '', Cart::total());
+        return view('client.pages.checkout',compact('user','price'));  
     }
     
 }

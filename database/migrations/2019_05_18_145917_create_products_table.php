@@ -19,8 +19,9 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->text('description');
             $table->integer('quantity');
-            $table->decimal('price');
-            $table->decimal('promotional');
+            $table->float('price');
+            $table->float('promotional');
+            $table->string('image');
             $table->integer('idCategory');
             $table->integer('idProductType');
             $table->integer('status')->default(1);

@@ -16,8 +16,10 @@ class CreateCustomersTable extends Migration
         Schema::create('customer', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idUser');
+            $table->string('email');
             $table->string('address');
             $table->string('phone',20);
+            $table->integer('active');
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ class Order extends Model
     //
     protected $table = 'order';
     protected $fillable = [
-    	'code_order', 'idUser', 'name', 'addresss', 'email', 'phone', 'monney', 'message', 'status',
+    	'code_order', 'idUser', 'name', 'address', 'email', 'phone', 'monney', 'message', 'status',
     ];
     public function User(){
     	return $this->belongsTo('App\Models\User','idUser','id');

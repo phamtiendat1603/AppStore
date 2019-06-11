@@ -21,7 +21,7 @@
 			<div class="wrapper">
 				<!-- first section -->
 				<div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
-					<h3 class="heading-tittle text-center font-italic">{{ $prosamsung[0]->categories->name }}</h3>
+					<h3 class="heading-tittle text-center font-italic">@if(isset($prosamsung)) {{ $prosamsung[0]->categories->name }} @endif</h3>
 					<div class="row">
 						@foreach($prosamsung as $pro)
 							<div class="col-md-4 product-men mt-5">
