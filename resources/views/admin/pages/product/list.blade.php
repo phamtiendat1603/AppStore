@@ -50,7 +50,7 @@
 									<b>Khuyến mại</b>: {{ $value->promotional }}
                                     <br/>
                                     <b>Hình minh họa</b>: 
-                                    <img src="img/upload/product/{{ $value->image }}" width="100" height="100">
+                                    <img src="{{asset('img/upload/product')}}{{ '/'.$value->image }}" width="100" height="100">
 		                        </td>
 		                        <td>{{ $value->categories->name }}</td>
 		                        <td>{{ $value->productTypes->name }}</td>

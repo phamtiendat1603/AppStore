@@ -11,6 +11,8 @@ use Cart;
 use Auth;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Mail;
+use App\Mail\ShoppingMail;
 class CartController extends Controller
 {
 
@@ -56,13 +58,15 @@ class CartController extends Controller
         $order = Order::create($data);
         $idOrder = $order->id;
         $orderdetail = [];
-        foreach( Cart::content() as $cart ){
+        $orderdetails = []; 
+        foreach( Cart::content() as $key => $cart ){
             $orderdetail['idOrder'] = $idOrder;
             $orderdetail['idProduct'] = $cart->id;
             $orderdetail['quantity'] = $cart->qty;
             $orderdetail['price'] = $cart->price;
-            OrderDetail::create($orderdetail);
+            $orderdetails[$key] = OrderDetail::create($orderdetail);
         }
+        Mail::to($order->email)->send(new ShoppingMail($order,$orderdetails));
         Cart::destroy();
         return response()->json('Đã mua hàng thành công',200);
     }
