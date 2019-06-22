@@ -170,4 +170,18 @@ class UserController extends Controller
         Auth::login($user);
         return back()->with('thongbao','Đăng ký tài khoản thành công');
     }
+
+    public function loginAdmin(Request $request) {
+        $data = $request->only('email','password');
+        if(Auth::attempt($data,$request->has('remember'))){
+            if(Auth::user()->role == 1)
+                return redirect('admin/')->with('thongbao','Đăng nhập thành công');
+            else if(Auth::user()->role == 2)
+                return redirect()->route('product.index')->with('thongbao','Đăng nhập thành công');
+            else if(Auth::user()->role == 3)
+                return redirect()->route('order.index')->with('thongbao','Đăng nhập thành công');
+        }else{
+            return redirect()->route('login.admin')->with('error','Đăng nhập thất bại. Xin vui lòng kiểm tra lại tài khoản');
+        }
+    }
 }
