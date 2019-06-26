@@ -24,12 +24,12 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:255|unique:product,name',
+            'name' => 'required|min:2|max:255|unique:product,name,'.($this->id ?? ''),
             'description' => 'required|min:2',
             'quantity' => 'required|numeric',
             'price' => 'required|numeric',
             'promotional' => 'numeric',
-            'image' => 'required|image',
+            'image' => ($this->id ? 'nullable' : 'required').'|image',
         ];
     }
     public function messages(){
@@ -39,6 +39,7 @@ class StoreProductRequest extends FormRequest
             'max' => ':attribute tối đa có 255 ký tự',
             'numeric' => ':attribute phải là một số ',
             'image' => ':attribute không là hình ảnh',
+            'unique' => ':attribute đã tồn tại trong hệ thống'
         ];
     }
     public function attributes(){

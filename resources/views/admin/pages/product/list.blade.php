@@ -78,7 +78,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa category <span class="title"></span></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa sản phẩm <span class="title"></span></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -87,6 +87,7 @@
                     <div class="row" style="margin: 5px">
 				        <div class="col-lg-12">
 				            <form role="form" id="updateProduct" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" class="idProduct">
                                 <fieldset class="form-group">
                                     <label>Tên sản phẩm</label>
                                     <input class="form-control name" name="name" placeholder="Nhập tên loại sản phẩm">

@@ -103,7 +103,7 @@ class UserController extends Controller
                 'email' => $user->email,
                 'password' => '',
                 'social_id' => $user->id,
-                'ruler' => 0,
+                'role' => 0,
                 'status' => 0,
                 'avatar' => $user->avatar,
             ]); 
@@ -169,5 +169,20 @@ class UserController extends Controller
         $user = User::create($data);
         Auth::login($user);
         return back()->with('thongbao','Đăng ký tài khoản thành công');
+    }
+
+    public function loginAdmin(Request $request) {
+        $data = $request->only('email','password');
+        if(Auth::attempt($data,$request->has('remember'))){
+            if(Auth::user()->role === 1) {
+                return redirect('admin/');
+            } else if(Auth::user()->role === 2) {
+                return request()->route('product.index');
+            } else if(Auth::user()->role === 3) {
+                return redirect()->route('order.index');
+            }
+        }else{
+            return redirect()->route('login.admin')->with('error','Đăng nhập thất bại. Xin vui lòng kiểm tra lại tài khoản');
+        }
     }
 }

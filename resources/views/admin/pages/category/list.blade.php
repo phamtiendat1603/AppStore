@@ -69,6 +69,7 @@
                     <div class="row" style="margin: 5px">
 				        <div class="col-lg-12">
 				            <form role="form">
+				            	<!-- <input type="hidden" name="id" value=""> -->
 				                <fieldset class="form-group">
 				                    <label>Name</label>
 				                    <input class="form-control name" name="name" placeholder="Nhập tên category">

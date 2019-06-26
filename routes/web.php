@@ -10,15 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::post('admin/login','UserController@loginAdmin')->name('admin.login');
+Route::view('admin/login','admin.pages.login')->name('login.admin');
 
 Route::get('getproducttype','AjaxController@getProductType');
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'adminMiddleware'],function(){
+	Route::view('/','admin.pages.index');
 	Route::resource('category','CategoryController');
 	Route::resource('producttype','ProductTypeController');
 	Route::resource('product','ProductController');
-	
 	Route::post('updatePro/{id}','ProductController@update');
+	Route::resource('order','OrderController');
 });
 
 Route::get('callback/{social}','UserController@handleProviderCallback');

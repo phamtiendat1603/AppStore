@@ -76,21 +76,8 @@ class CategoryController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoryRequest $request, $id)
     {
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required|min:2|max:255'
-            ],
-            [
-                'required' => 'Tên danh mục sản phẩm không được để trống',
-                'min' => 'Tên danh mục sản phẩm phải đủ từ 2-255 ký tự',
-                'max' => 'Tên danh mục sản phẩm phải đủ từ 2-255 ký tự',
-            ]
-        );
-        if($validator->fails()){
-            return response()->json(['error' =>'true','message' => $validator->errors()],200);
-        }
         $category= Categories::find($id);
         $category->update(
             [

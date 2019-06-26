@@ -103,36 +103,8 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, $id)
     {
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required|min:2|max:255',
-                'description' => 'required|min:2',
-                'quantity' => 'required|numeric',
-                'price' => 'required|numeric',
-                'promotional' => 'numeric',
-                'image' => 'image',
-            ],
-            [
-                'required' => ':attribute không được bỏ trống',
-                'min' => ':attribute tối thiểu có 2 ký tự',
-                'max' => ':attribute tối đa có 255 ký tự',
-                'numeric' => ':attribute phải là một số ',
-                'image' => ':attribute không là hình ảnh',
-            ],
-            [
-                'name' => 'Tên sản phẩm',
-                'description' => 'Mô tả sản phẩm',
-                'quantity' => 'Số lượng sản phẩm',
-                'price' => 'Đơn giá sản phẩm',
-                'promotional' => 'Giá khuyến mại',
-                'image' => 'Ảnh minh họa',
-            ]
-        );
-        if($validator->fails()){
-            return response()->json(['error' => 'true', 'message' => $validator->errors()],200);
-        }
         $product = Product::find($id);
         $data = $request->all();
         $data['slug'] = utf8tourl($request->name);

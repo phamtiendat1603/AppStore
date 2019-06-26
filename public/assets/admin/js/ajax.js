@@ -13,7 +13,6 @@ $(document).ready(function(){
 			dataType : 'json',
 			type : 'get',
 			success :function($result){
-				console.log($result);
 				$('.name').val($result.name);
 				$('.title').text($result.name);
 				if($result.status == 1){
@@ -30,21 +29,20 @@ $(document).ready(function(){
 				url : 'admin/category/'+id,
 				data : {
 					name : ten,
-					status : status
+					status : status,
+					id:id
 				},
 				type : 'put',
 				dataType : 'json',
 				success : function($result){
-					console.log($result);
-					if($result.error == 'true'){
-						$('.error').show();
-						$('.error').text($result.message.name[0]);	
-					}else{
-						toastr.success($result.success, 'Thông báo', {timeOut: 5000});
-						$('#edit').modal('hide');
-						location.reload();
-					}
-
+					toastr.success($result.success, 'Thông báo', {timeOut: 5000});
+					$('#edit').modal('hide');
+					location.reload();
+				},
+				error: function(error) {
+					var errors = JSON.parse(error.responseText);
+					$('.error').show();
+					$('.error').text(errors.errors.name);
 				}
 			});
 		});
@@ -166,6 +164,7 @@ $(document).ready(function(){
 		$('.errorImage').hide();
 		$('.errorDescription').hide();
 		let id = $(this).data('id');
+		$('.idProduct').val(id);
 		$.ajax({
 			url : 'admin/product/'+id+'/edit',
 			dataType : 'json',
@@ -221,43 +220,36 @@ $(document).ready(function(){
 				cache : false,
 				type : 'post',
 				success : function(data){
-					console.log(data);
-					if(data.error == 'true'){
-						if(data.message.image){
-							$('.errorImage').show();
-							$('.errorImage').text(data.message.image[0]);
-							$('.image').val('');
-						}
-						if(data.message.name){
-							$('.errorName').show();
-							$('.errorName').text(data.message.name[0]);
-							$('.name').val('');
-						}
-						if(data.message.quantity){
-							$('.errorQuantity').show();
-							$('.errorQuantity').text(data.message.quantity[0]);
-							$('.quantity').val('');
-						}
-						if(data.message.price){
-							$('.errorPrice').show();
-							$('.errorPrice').text(data.message.price[0]);
-							$('.price').val('');
-						}
-						if(data.message.promotional){
-							$('.errorPromotional').show();
-							$('.errorPromotional').text(data.message.promotional[0]);
-							$('.promotional').val('');
-						}
-						if(data.message.description){
-							$('.errorDescription').show();
-							$('.errorDescription').text(data.message.description[0]);
-							$('.description').val('');
-						}
-					}else{
-						toastr.success(data.result, 'Thông báo', {timeOut: 5000});
-						$('#edit').modal('hide');
-						location.reload();
-					}
+					toastr.success(data.result, 'Thông báo', {timeOut: 5000});
+					$('#edit').modal('hide');
+					location.reload();
+				},
+				error: function(error) {
+					var errors = JSON.parse(error.responseText);
+					if(errors.errors.name != '') {
+						$('.errorName').show();
+						$('.errorName').text(errors.errors.name);
+					} 
+					if(errors.errors.description != '') {
+						$('.errorDescription').show();
+						$('.errorDescription').text(errors.errors.description);
+					} 
+					if(errors.errors.quantity != '') {
+						$('.errorQuantity').show();
+						$('.errorQuantity').text(errors.errors.quantity);
+					} 
+					if(errors.errors.price != '') {
+						$('.errorPrice').show();
+						$('.errorPrice').text(errors.errors.price);
+					} 
+					if(errors.errors.promotional != '') {
+						$('.errorPromotional').show();
+						$('.errorPromotional').text(errors.errors.promotional);
+					} 
+					if(errors.errors.image != '') {
+						$('.errorImage').show();
+						$('.errorImage').text(errors.errors.image);
+					} 
 				}
 			});
 		});
