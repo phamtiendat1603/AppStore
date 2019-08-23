@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        echo "Order";
+        echo "Bạn đã vào trang order";
     }
 
     /**

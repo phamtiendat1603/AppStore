@@ -9,8 +9,13 @@ use App\Models\ProductTypes;
 use App\Http\Requests\StoreProductRequest;
 use File;
 use Validator;
+use App\Services\ImageService;
 class ProductController extends Controller
 {
+    protected $image_service;
+    public function __construct(ImageService $imageService) {
+        $this->image_service = $imageService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,30 +49,20 @@ class ProductController extends Controller
     {
         if($request->hasFile('image')){
             $file = $request->image;
-            //Lấy tên file
-            $file_name = $file->getClientOriginalName();
-            //Lấy loại file
-            $file_type = $file->getMimeType();
-            //Kích thước file với đơn vị byte
-            $file_size = $file->getSize();
-            if($file_type == 'image/png' || $file_type == 'image/jpg' || $file_type == 'image/jpeg' || $file_type == 'image/gif'){
-                if($file_size <= 1048576){
-                    $file_name = date('D-m-yyyy').'-'.rand().'-'.utf8tourl($file_name);
-                    if($file->move('img/upload/product',$file_name)){
-                        $data = $request->all();
-                        $data['slug'] = utf8tourl($request->name);
-                        $data['image'] = $file_name;
-                        Product::create($data);
-                        return redirect()->route('product.index')->with('thongbao','Đã thêm thành công sản phẩm mới');
-                    }
-                }else{
-                    return back()->with('error','Bạn không thể upload ảnh quá 1mb');
+            if( $this->image_service->checkFile($file) == 1) {
+                $fileName = $this->image_service->moveImage($file, 'img/upload/product');
+                if($fileName != 0) {
+                    $data = $request->all();
+                    $data['slug'] = utf8tourl($request->name);
+                    $data['image'] = $fileName;
+                    Product::create($data);
+                    return redirect()->route('product.index')->with('thongbao','Đã thêm thành công sản phẩm mới');
                 }
-            }else{
+            } elseif ( $this->image_service->checkFile($file) == 0) {
+                return back()->with('error','Ảnh của bạn quá lớn chỉ được upload ảnh dưới 1mb');
+            } else {
                 return back()->with('error','File bạn chọn không là hình ảnh');
             }
-        }else{
-            return back()->with('error','Bạn chưa thêm ảnh minh họa cho sản phẩm');
         }
     }
 
@@ -110,28 +105,14 @@ class ProductController extends Controller
         $data['slug'] = utf8tourl($request->name);
         if($request->hasFile('image')){
             $file = $request->image;
-            //Lấy tên file
-            $file_name = $file->getClientOriginalName();
-            //Lấy loại file
-            $file_type = $file->getMimeType();
-            //Kích thước file với đơn vị byte
-            $file_size = $file->getSize();
-            if($file_type == 'image/png' || $file_type == 'image/jpg' || $file_type == 'image/jpeg' || $file_type == 'image/gif'){
-                if($file_size <= 1048576){
-                    $file_name = date('D-m-yyyy').'-'.rand().'-'.utf8tourl($file_name);
-                    if($file->move('img/upload/product',$file_name)){
-                        $data['image'] = $file_name;
-                        if(File::exists('img/upload/product'.$product->image)){
-                            //Xóa file
-                            unlink('img/upload/product'.$product->image);
-                        }
-                    }
-                }else{
-                    return response()->json(['error' => 'Ảnh của bạn quá lớn chỉ được upload ảnh dưới 1mb'],200);
+            if( $this->image_service->checkFile($file) == 1) {
+                $nameImage = $this->image_service->moveImage($file, 'img/upload/product');
+                if($nameImage != 0) {
+                    $data['image'] = $nameImage;
                 }
-            }else{
-                return response()->json(['error' => 'File bạn chọn không là hình ảnh'],200);
-            }
+            } elseif ( $this->image_service->checkFile($file) == 0) {
+                return response()->json(['result' => 'Ảnh của bạn quá lớn chỉ được upload ảnh dưới 1mb '.$id],200);
+            } 
         }else{
             $data['image'] = $product->image;
         }
@@ -148,9 +129,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        if(File::exists('img/upload/product/'.$product->image)){
-            unlink('img/upload/product/'.$product->image);
-        }
+        $this->image_service->deleteFile($product->image, 'img/upload/product');
         $product->delete();
         return response()->json(['result' => 'Đã xóa thành công sản phẩm có id là '.$id],200);
     }

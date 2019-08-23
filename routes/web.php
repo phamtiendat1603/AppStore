@@ -10,8 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+<<<<<<< HEAD
 Route::post('admin/login','UserController@loginAdmin')->name('admin.login');
 Route::view('admin/login','admin.pages.login')->name('login.admin');
+=======
+//Admin
+Route::view('admin/login','admin.pages.login')->name('login.admin');
+Route::post('admin/login','UserController@loginAdmin')->name('admin.login');
+>>>>>>> 166467ded0d365a09d37792c0aa378a1696bcc66
 
 Route::get('getproducttype','AjaxController@getProductType');
 Route::group(['prefix' => 'admin', 'middleware' => 'adminMiddleware'],function(){
@@ -20,9 +26,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminMiddleware'],function()
 	Route::resource('producttype','ProductTypeController');
 	Route::resource('product','ProductController');
 	Route::post('updatePro/{id}','ProductController@update');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 166467ded0d365a09d37792c0aa378a1696bcc66
 	Route::resource('order','OrderController');
 });
 
+//Client
 Route::get('callback/{social}','UserController@handleProviderCallback');
 Route::get('login/{social}','UserController@redirectProvider')->name('login.social');
 Route::get('logout','UserController@logout');

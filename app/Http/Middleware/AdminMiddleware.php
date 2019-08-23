@@ -16,13 +16,17 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if(Auth::check()) {
-            if(Auth::user()->role >= 1) {
+            if(Auth::user()->role > 0) {
                 return $next($request);
             }else {
-                return redirect()->route('login.admin')->with('error','Bạn không có quyền truy cập vào trang này');;
+                return redirect()
+                        ->route('login.admin')
+                        ->with('error','Bạn không có quyền vào trang này');
             }
-        }else{
-            return redirect()->route('login.admin')->with('error','Đăng nhập bằng tài khoản admin để vào trang quản trị');;
+        }else {
+            return redirect()
+                    ->route('login.admin')
+                    ->with('error','Đăng nhập để vào trang quản trị');
         }
     }
 }
