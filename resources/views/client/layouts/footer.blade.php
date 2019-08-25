@@ -212,4 +212,25 @@
 		$('#address').modal('show');
 	</script>
 @endif
+<!-- imagezoom -->
+<script src="assets/client/js/imagezoom.js"></script>
+<!-- //imagezoom -->
+
+<!-- flexslider -->
+<link rel="stylesheet" href="assets/client/css/flexslider.css" type="text/css" media="screen" />
+
+<script src="assets/client/js/jquery.flexslider.js"></script>
+<script>
+	// Can also be used with $(document).ready()
+	$(window).load(function () {
+		$('.flexslider').flexslider({
+			animation: "slide",
+			controlNav: "thumbnails"
+		});
+	});
+</script>
+<!-- //FlexSlider-->
+<!-- smoothscroll -->
+<script src="assets/client/js/SmoothScroll.min.js"></script>
+<!-- //smoothscroll -->
 <!-- //js-files -->
