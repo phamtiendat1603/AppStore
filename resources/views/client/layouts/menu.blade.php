@@ -30,7 +30,7 @@
 							@if(count($cate->productType)>0)
 								<div class="dropdown-menu">
 									@foreach($cate->productType as $protype)
-										<a class="dropdown-item" href="#">{{ $protype->name }}</a>
+										<a class="dropdown-item" href="{{ $protype->slug }}.html">{{ $protype->name }}</a>
 									@endforeach
 									{{-- <div class="dropdown-divider"></div> --}}
 								</div>

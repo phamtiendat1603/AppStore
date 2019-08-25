@@ -23,4 +23,17 @@ class HomeController extends Controller
         $product2 = Product::where('status',1)->where('idCategory',3)->get();
 		return view('client.pages.index',['prosamsung' => $product1, 'proTaiNghe' => $product2]);
 	}
+
+    public function getDetail($slug) {
+        $productDetail = Product::where('slug', $slug)->first();
+        $idProType = ProductTypes::where('slug', $slug)->first();
+        
+        if (count($productDetail) > 0) {
+            return view('client.pages.detail', ['product' => $productDetail]);
+        }
+        else if( count($idProType) > 0 ) {
+            $productByProdType = Product::where('idProductType', $idProType->id)->get();
+            return view('client.pages.detail_protype', ['product' => $productByProdType, 'producttype' => $idProType]);
+        }
+    }
 }
